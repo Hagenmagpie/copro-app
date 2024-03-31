@@ -3,7 +3,7 @@ name = "copro"
 version = "0.1.0"
 authors = ["Hagenmagpie <hagenmagpie@tutamail.com>"]
 edition = "2021"
-rust-version = "1.72"
+rust-version = "1.77.1"
 
 [dependencies]
 #default = ["eframe_copro"]
