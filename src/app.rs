@@ -1,18 +1,18 @@
-/// We derive Deserialize/Serialize so we can persist app state on shutdown.
+/// 我们派生Deserialize/Serialize以便在关闭时持久化应用状态。
 #[derive(serde::Deserialize, serde::Serialize)]
-#[serde(default)] // if we add new fields, give them default values when deserializing old state
+#[serde(default)] // 如果我们添加新的字段，当反序列化旧状态时给它们默认值
 pub struct CoproApp {
-    // Example stuff:
+    // 示例内容:
     label: String,
 
-    #[serde(skip)] // This how you opt-out of serialization of a field
+    #[serde(skip)] // 这是如何选择不序列化一个字段
     value: f32,
 }
 
 impl Default for CoproApp {
     fn default() -> Self {
         Self {
-            // Example stuff:
+            // 示例内容:
             label: "Hello World!".to_owned(),
             value: 2.7,
         }
@@ -20,13 +20,12 @@ impl Default for CoproApp {
 }
 
 impl CoproApp {
-    /// Called once before the first frame.
+    /// 在第一帧之前调用一次。
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        // This is also where you can customize the look and feel of egui using
-        // `cc.egui_ctx.set_visuals` and `cc.egui_ctx.set_fonts`.
+        // 这也是你可以使用`cc.egui_ctx.set_visuals` 和 `cc.egui_ctx.set_fonts`自定义egui外观和感觉的地方。
 
-        // Load previous app state (if any).
-        // Note that you must enable the `persistence` feature for this to work.
+        // 加载之前的应用状态（如果有）。
+        // 注意，你必须启用`persistence`特性才能使这个工作。
         if let Some(storage) = cc.storage {
             return eframe::get_value(storage, eframe::APP_KEY).unwrap_or_default();
         }
@@ -36,21 +35,21 @@ impl CoproApp {
 }
 
 impl eframe::App for CoproApp {
-    /// Called by the frame work to save state before shutdown.
+    /// 在关闭前由框架调用以保存状态。
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
         eframe::set_value(storage, eframe::APP_KEY, self);
     }
 
-    /// Called each time the UI needs repainting, which may be many times per second.
+    /// 每次UI需要重绘时调用，这可能是每秒多次。
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        // Put your widgets into a `SidePanel`, `TopBottomPanel`, `CentralPanel`, `Window` or `Area`.
-        // For inspiration and more examples, go to https://emilk.github.io/egui
+        // 将你的小部件放入`SidePanel`，`TopBottomPanel`，`CentralPanel`，`Window`或`Area`。
+        // 想要灵感和更多示例，去 https://emilk.github.io/egui
 
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
-            // The top panel is often a good place for a menu bar:
+            // 顶部面板通常是放置菜单栏的好地方：
 
             egui::menu::bar(ui, |ui| {
-                // NOTE: no File->Quit on web pages!
+                // 注意：网页上没有File->Quit！
                 let is_web = cfg!(target_arch = "wasm32");
                 if !is_web {
                     ui.menu_button("File", |ui| {
@@ -66,8 +65,8 @@ impl eframe::App for CoproApp {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            // The central panel the region left after adding TopPanel's and SidePanel's
-            ui.heading("eframe template");
+            // 中央面板是添加了TopPanel's和SidePanel's后剩下的区域
+            ui.heading("welcome to copro");
 
             ui.horizontal(|ui| {
                 ui.label("Write something: ");
